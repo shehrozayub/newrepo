@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="simpleAccountsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accounts">
+          <Key>
+            <PropertyRef Name="accountID" />
+          </Key>
+          <Property Name="accountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="accountHead" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="accountDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdOn" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="admins">
+          <Key>
+            <PropertyRef Name="adminid" />
+          </Key>
+          <Property Name="adminid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lastlogin" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="expenses">
+          <Key>
+            <PropertyRef Name="expenseID" />
+          </Key>
+          <Property Name="expenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="expenseAmount" Type="int" Nullable="false" />
+          <Property Name="expenseProduct" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdOn" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="purchases">
+          <Key>
+            <PropertyRef Name="purchaseID" />
+          </Key>
+          <Property Name="purchaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="purchaseAmount" Type="int" Nullable="false" />
+          <Property Name="purchaseProduct" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="accountID" Type="int" Nullable="false" />
+          <Property Name="createdOn" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sales">
+          <Key>
+            <PropertyRef Name="saleID" />
+          </Key>
+          <Property Name="saleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="saleAmount" Type="int" Nullable="false" />
+          <Property Name="saleProduct" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="accountID" Type="int" Nullable="false" />
+          <Property Name="createdOn" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="transactions">
+          <Key>
+            <PropertyRef Name="transactionid" />
+          </Key>
+          <Property Name="transactionid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transactionamount" Type="int" Nullable="false" />
+          <Property Name="transactiontype" Type="bit" Nullable="false" />
+          <Property Name="accountid" Type="int" Nullable="false" />
+          <Property Name="createdOn" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lastlogin" Type="date" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_purchases_accounts">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="purchases" Type="Self.purchases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="accountID" />
+            </Principal>
+            <Dependent Role="purchases">
+              <PropertyRef Name="accountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_accounts">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="accountID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="accountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_transactions_accounts">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="accountID" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="accountid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="simpleAccountsModelStoreContainer">
+          <EntitySet Name="accounts" EntityType="Self.accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="admins" EntityType="Self.admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expenses" EntityType="Self.expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="purchases" EntityType="Self.purchases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_purchases_accounts" Association="Self.FK_purchases_accounts">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="purchases" EntitySet="purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_accounts" Association="Self.FK_sales_accounts">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_transactions_accounts" Association="Self.FK_transactions_accounts">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="simpleAccountsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="purchase">
+          <Key>
+            <PropertyRef Name="purchaseID" />
+          </Key>
+          <Property Name="purchaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="purchaseAmount" Type="Int32" Nullable="false" />
+          <Property Name="purchaseProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="accountID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="simpleAccountsModel.FK_purchases_accounts" FromRole="purchase" ToRole="account" />
+          <Property Name="createdOn" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="sale">
+          <Key>
+            <PropertyRef Name="saleID" />
+          </Key>
+          <Property Name="saleID" Type="Int32" Nullable="false" />
+          <Property Name="saleAmount" Type="Int32" Nullable="false" />
+          <Property Name="saleProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="accountID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="simpleAccountsModel.FK_sales_accounts" FromRole="sale" ToRole="account" />
+          <Property Name="createdOn" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityContainer Name="simpleAccountsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="purchases" EntityType="Self.purchase" />
+          <EntitySet Name="sales" EntityType="Self.sale" />
+          <EntitySet Name="expenses" EntityType="simpleAccountsModel.expens" />
+          <EntitySet Name="users" EntityType="simpleAccountsModel.user" />
+          <EntitySet Name="accounts" EntityType="simpleAccountsModel.account" />
+          <AssociationSet Name="FK_purchases_accounts" Association="simpleAccountsModel.FK_purchases_accounts">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="purchase" EntitySet="purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_accounts" Association="simpleAccountsModel.FK_sales_accounts">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="sale" EntitySet="sales" />
+          </AssociationSet>
+          <EntitySet Name="transactions" EntityType="simpleAccountsModel.transaction" />
+          <AssociationSet Name="FK_transactions_accounts" Association="simpleAccountsModel.FK_transactions_accounts">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
+          <EntitySet Name="admins" EntityType="simpleAccountsModel.admin" />
+        </EntityContainer>
+        <EntityType Name="expens">
+          <Key>
+            <PropertyRef Name="expenseID" />
+          </Key>
+          <Property Name="expenseID" Type="Int32" Nullable="false" />
+          <Property Name="expenseAmount" Type="Int32" Nullable="false" />
+          <Property Name="expenseProduct" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="createdOn" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lastlogin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="accountID" />
+          </Key>
+          <Property Name="accountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="accountHead" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="accountDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createdOn" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="purchases" Relationship="simpleAccountsModel.FK_purchases_accounts" FromRole="account" ToRole="purchase" />
+          <NavigationProperty Name="sales" Relationship="simpleAccountsModel.FK_sales_accounts" FromRole="account" ToRole="sale" />
+          <NavigationProperty Name="transactions" Relationship="simpleAccountsModel.FK_transactions_accounts" FromRole="account" ToRole="transaction" />
+        </EntityType>
+        <Association Name="FK_purchases_accounts">
+          <End Type="simpleAccountsModel.account" Role="account" Multiplicity="1" />
+          <End Type="simpleAccountsModel.purchase" Role="purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="accountID" />
+            </Principal>
+            <Dependent Role="purchase">
+              <PropertyRef Name="accountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_accounts">
+          <End Type="simpleAccountsModel.account" Role="account" Multiplicity="1" />
+          <End Type="simpleAccountsModel.sale" Role="sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="accountID" />
+            </Principal>
+            <Dependent Role="sale">
+              <PropertyRef Name="accountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="transaction">
+          <Key>
+            <PropertyRef Name="transactionid" />
+          </Key>
+          <Property Name="transactionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transactionamount" Type="Int32" Nullable="false" />
+          <Property Name="transactiontype" Type="Boolean" Nullable="false" />
+          <Property Name="accountid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="simpleAccountsModel.FK_transactions_accounts" FromRole="transaction" ToRole="account" />
+          <Property Name="createdOn" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <Association Name="FK_transactions_accounts">
+          <End Type="simpleAccountsModel.account" Role="account" Multiplicity="1" />
+          <End Type="simpleAccountsModel.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="accountID" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="accountid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="adminid" />
+          </Key>
+          <Property Name="adminid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lastlogin" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="simpleAccountsModelStoreContainer" CdmEntityContainer="simpleAccountsEntities">
+          <EntitySetMapping Name="purchases">
+            <EntityTypeMapping TypeName="simpleAccountsModel.purchase">
+              <MappingFragment StoreEntitySet="purchases">
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="purchaseID" ColumnName="purchaseID" />
+                <ScalarProperty Name="purchaseAmount" ColumnName="purchaseAmount" />
+                <ScalarProperty Name="purchaseProduct" ColumnName="purchaseProduct" />
+                <ScalarProperty Name="accountID" ColumnName="accountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales">
+            <EntityTypeMapping TypeName="simpleAccountsModel.sale">
+              <MappingFragment StoreEntitySet="sales">
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="saleID" ColumnName="saleID" />
+                <ScalarProperty Name="saleAmount" ColumnName="saleAmount" />
+                <ScalarProperty Name="saleProduct" ColumnName="saleProduct" />
+                <ScalarProperty Name="accountID" ColumnName="accountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expenses">
+            <EntityTypeMapping TypeName="simpleAccountsModel.expens">
+              <MappingFragment StoreEntitySet="expenses">
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="expenseProduct" ColumnName="expenseProduct" />
+                <ScalarProperty Name="expenseAmount" ColumnName="expenseAmount" />
+                <ScalarProperty Name="expenseID" ColumnName="expenseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="simpleAccountsModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="lastlogin" ColumnName="lastlogin" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="simpleAccountsModel.account">
+              <MappingFragment StoreEntitySet="accounts">
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="accountDescription" ColumnName="accountDescription" />
+                <ScalarProperty Name="accountHead" ColumnName="accountHead" />
+                <ScalarProperty Name="accountID" ColumnName="accountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transactions">
+            <EntityTypeMapping TypeName="simpleAccountsModel.transaction">
+              <MappingFragment StoreEntitySet="transactions">
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="accountid" ColumnName="accountid" />
+                <ScalarProperty Name="transactiontype" ColumnName="transactiontype" />
+                <ScalarProperty Name="transactionamount" ColumnName="transactionamount" />
+                <ScalarProperty Name="transactionid" ColumnName="transactionid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="simpleAccountsModel.admin">
+              <MappingFragment StoreEntitySet="admins">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="lastlogin" ColumnName="lastlogin" />
+                <ScalarProperty Name="adminid" ColumnName="adminid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

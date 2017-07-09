@@ -1,0 +1,35 @@
+﻿@model List<ClassLibrary1.expens>
+
+@section AddToHead{
+    <link href="@Url.Content("~/Content/w3.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/animate.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
+}
+
+@{
+    ViewBag.Title = "EnterExpense";
+}
+
+<h2>Enter Expense</h2>
+
+<p>@ViewBag.SucessMessage</p>
+
+<div class="w3-card-4">
+
+    <div class="w3-container w3-green">
+        <h2>Enter New Expense Details</h2>
+    </div>
+
+    <div class="w3-container">
+        @using (Html.BeginForm("EnterNewExpense", "Transactions", FormMethod.Post))
+        {
+            <br />
+            @Html.TextBox("ExpenseAmount", "", "", new { @class = "w3-input", placeholder = "Enter Expense Amount", onfocusout = "validationCheck('ExpenseAmount')" })
+            <br /><br />
+            @Html.TextBox("ExpenseProduct", "", "", new { @class = "w3-input", placeholder = "Enter Expense Product", onfocusout = "validationCheck('ExpenseProduct')" })
+            <br /><br />
+            <input class="w3-btn w3-blue-grey" type="submit" name="loginsubmit" value="Create" /><br /><br />
+        }
+    </div>
+
+</div>

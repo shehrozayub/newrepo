@@ -1,0 +1,39 @@
+﻿@model List<ClassLibrary1.sale>
+
+@section AddToHead{
+    <link href="@Url.Content("~/Content/w3.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/animate.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
+}
+
+@{
+    ViewBag.Title = "CreateSale";
+}
+
+<h2>Create Sale</h2>
+
+<p>@ViewBag.SucessMessage</p>
+
+<div class="w3-card-4">
+
+    <div class="w3-container w3-green">
+        <h2>Enter New Sale Details</h2>
+    </div>
+
+    <div class="w3-container">
+        @using (Html.BeginForm("CreateNewSale", "Transactions", FormMethod.Post))
+        {
+            <br />
+            @Html.TextBox("saleAmount", "", "", new { @class = "w3-input", placeholder = "Enter Sale Amount", onfocusout = "validationCheck('saleAmount')" })
+            <br /><br />
+            @Html.TextBox("saleProduct", "", "", new { @class = "w3-input", placeholder = "Enter Sale Product", onfocusout = "validationCheck('saleProduct')" })
+            <br /><br />
+            @Html.TextBox("accountID", "", "", new { @class = "w3-input", placeholder = "Enter Account ID", onfocusout = "validationCheckAccountID('accountID')" })
+            <span id="viewName"></span>
+            <br /><br />
+            <input class="w3-btn w3-blue-grey" type="submit" name="loginsubmit" value="Create" /><br /><br />
+        }
+    </div>
+
+</div>
+

@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+
+}
+
+<h2>Dashboard</h2>
+
+@section AddToHead{
+    <link href="@Url.Content("~/Content/w3.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/animate.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/loginstyle.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
+}
+
+<h2>Home</h2>
+
+<p>Welcome, @Session["UserName"]!</p>
+<br />
+
+<h2>Account Operations</h2>
+<a class="w3-btn w3-green" href="/Admin/ViewAll">View Users</a>
+<a class="w3-btn w3-green" href="/Admin/CreateUser">Create New Account</a>
+
+<h2>View Operations</h2>
+<a class="w3-btn w3-green" href="/Admin/ViewPurchases">View All Purchases</a>
+<a class="w3-btn w3-green" href="/Admin/ViewSales">View All Sales</a>
+<a class="w3-btn w3-green" href="/Admin/ViewExpenses">View All Expenses</a>

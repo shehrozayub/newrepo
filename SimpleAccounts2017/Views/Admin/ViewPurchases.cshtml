@@ -1,0 +1,44 @@
+﻿@model List<ClassLibrary1.purchase>
+
+
+
+@{
+    ViewBag.Title = "ViewPurchases";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section AddToHead{
+    <link href="@Url.Content("~/Content/w3.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/animate.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
+}
+
+
+
+
+<h2>View All Purchases</h2>
+
+<table class="w3-table w3-striped w3-border  w3-hoverable">
+    <tr class="w3-green">
+        <th>ID</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Created On</th>
+        <th>Assossiated Account</th>
+    </tr>
+    @{for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>@Model[i].purchaseID</td>
+                <td>@Model[i].purchaseProduct</td>
+                <td>@Model[i].purchaseAmount</td>
+                <td>@Model[i].createdOn</td>
+                <td>@Model[i].accountID</td>
+            </tr>
+
+                    }
+
+    }
+</table>
+
+

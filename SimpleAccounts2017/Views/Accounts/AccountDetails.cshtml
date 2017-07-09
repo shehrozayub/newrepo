@@ -1,0 +1,112 @@
+﻿@model SimpleAccounts2017.Models.AccountDetailModel
+
+@{
+    ViewBag.Title = "AccountDetails";
+}
+
+@section AddToHead{
+    <link href="@Url.Content("~/Content/w3.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/animate.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
+}
+
+
+@{ int pT = 0;int sT = 0;int cpT = 0;int crT = 0; }
+<h2>Purchases</h2>   
+<table class="w3-table w3-striped w3-border  w3-hoverable">
+            <tr class="w3-green">
+                <th>Product</th>
+                <th>Price</th>
+                <th>Created On</th>
+            </tr>
+            @{for (int i = 0; i < Model.p.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.p[i].purchaseProduct</td>
+                        <td>@Model.p[i].purchaseAmount</td>@{pT = pT + Model.p[i].purchaseAmount;}
+                        <td>@Model.p[i].createdOn</td>
+                    </tr>
+
+                }
+
+            }
+        </table>
+<hr />
+
+<h2>Sales</h2>
+
+<table class="w3-table w3-striped w3-border  w3-hoverable">
+    <tr class="w3-green">
+        <th>Product</th>
+        <th>Price</th>
+        <th>Created On</th>
+    </tr>
+    @{for (int i = 0; i < Model.s.Count; i++)
+        {
+            <tr>
+                
+                <td>@Model.s[i].saleProduct</td>
+                <td>@Model.s[i].saleAmount</td>@{sT = sT + Model.s[i].saleAmount;}
+                <td>@Model.s[i].createdOn</td>
+            </tr>
+
+        }
+
+    }
+</table>
+<hr />
+
+<h2>Cash Receipts</h2>
+
+<table class="w3-table w3-striped w3-border  w3-hoverable">
+    <tr class="w3-green">
+        <th>Amount</th>
+        <th>Created On</th>
+    </tr>
+    @{for (int i = 0; i < Model.cr.Count; i++)
+        {
+            <tr>
+                
+                <td>@Model.cr[i].transactionamount</td>@{crT = crT + Model.cr[i].transactionamount;}
+                <td>@Model.cr[i].createdOn</td>
+            </tr>
+
+        }
+
+    }
+</table>
+<hr />
+<h2>Cash Payments</h2>
+<table class="w3-table w3-striped w3-border  w3-hoverable">
+    <tr class="w3-green">
+        <th>Amount</th>
+        <th>Created On</th>
+    </tr>
+    @{for (int i = 0; i < Model.cp.Count; i++)
+        {
+            <tr>
+                
+                <td>@Model.cp[i].transactionamount</td>@{cpT = cpT + Model.cp[i].transactionamount;}
+                <td>@Model.cp[i].createdOn</td>
+            </tr>
+
+        }
+      }
+</table>
+<hr />
+
+@{int recT = sT + cpT;int payT = pT + crT;int gT = recT - payT;}
+<h2>Summary</h2>
+<table class="w3-table w3-striped w3-border  w3-hoverable">
+    <tr class="w3-green">
+        <th>Item</th>
+        <th>Value</th>
+    </tr>
+    <tr><td>Total Purchases</td><td>@pT</td></tr>
+    <tr><td>Total Sales</td><td>@sT</td></tr>
+    <tr><td>Total Cash Paid</td><td>@cpT</td></tr>
+    <tr><td>Total Cash Recieved</td><td>@crT</td></tr>
+    <tr><td>Gross Total</td><td>@gT</td/></tr>
+
+</table>
+<hr />
